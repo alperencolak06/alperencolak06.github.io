@@ -7,14 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #121212; color: #e5e7eb; transition: background 0.3s ease; }
+        body { font-family: 'Inter', sans-serif; background-color: #0c0c0c; color: #e5e7eb; transition: background 0.3s ease; }
         .vibrant-border { border-bottom: 2px solid #f97316; }
         
         /* Genel Kart Efektleri */
         .card { background-color: #1e1e1e; transition: all 0.3s ease; overflow: hidden; }
         .card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.2); border-color: #f97316; }
         
-        /* Proje Görselleri */
+        /* Proje Görselleri (Placeholder'lar sildi, gerçek görseller için yer) */
         .project-image { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #333; }
 
         /* Masaüstü Sidebar Özelleştirmeleri */
@@ -26,28 +26,33 @@
         .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 0; }
         .accordion-content.open { opacity: 1; }
 
-        /* --- Shadow Matrix Oda 203 Game Stilleri --- */
-        #shadow-matrix-game.dark-mode-game { background-color: #0c0c0c; border: 1px solid #1a1a1a; box-shadow: inset 0 0 40px #000; perspective: 1000px; }
-        #shadow-grid { background-image: linear-gradient(#1e1e1e 1px, transparent 1px), linear-gradient(90deg, #1e1e1e 1px, transparent 1px); background-size: 20px 20px; border-radius: 12px; position: relative; width: 100%; height: 380px; }
+        /* --- Shadow Matrix Oda 203 Game Stilleri (Minimalist 2D) --- */
+        #shadow-matrix-game.dark-mode-game { background-color: #080808; border: 1px solid #1a1a1a; box-shadow: inset 0 0 40px #000; perspective: 1000px; }
+        #shadow-grid { background-image: linear-gradient(#1e1e1e 1px, transparent 1px), linear-gradient(90deg, #1e1e1e 1px, transparent 1px); background-size: 20px 20px; border-radius: 12px; position: relative; width: 100%; height: 380px; overflow: hidden; }
         
-        /* 3D Columns and Objects */
-        .column-structure { position: absolute; transform-style: preserve-3d; transition: transform 0.2s ease; }
-        .column-structure-1 { width: 40px; height: 160px; left: 15%; top: 10%; } /* Sol / Baş */
-        .column-structure-2 { width: 60px; height: 200px; left: 45%; top: 5%; } /* Orta / Vücut */
-        .column-structure-3 { width: 40px; height: 180px; left: 75%; top: 15%; } /* Sağ / Bacaklar */
+        /* 2D Columns (gri/beyazımsı, image_8.png visual style) */
+        .column-structure { position: absolute; transform-style: preserve-3d; transition: transform 0.2s ease; background-color: rgba(60, 60, 60, 0.95); border: 1px solid #444; }
+        .column-structure-1 { width: 35px; height: 180px; left: 10%; top: 10%; } /* Sol / Baş / En yüksek */
+        .column-structure-2 { width: 50px; height: 160px; left: 35%; top: 15%; } /* Orta / Vücut */
+        .column-structure-3 { width: 35px; height: 140px; left: 60%; top: 20%; } /* Sağ / Bacaklar / En alçak */
         
-        .red-object { position: absolute; background-color: rgba(185, 28, 28, 0.85); border: 2px solid #555; transition: transform 0.2s ease; }
-        .red-object-head { width: 30px; height: 30px; border-radius: 50%; top: -35px; left: 5px; } /* Yuvarlak Nesne */
-        .red-object-body { width: 50px; height: 80px; top: -85px; left: 5px; } /* Karmaşık Nesne (A) */
-        .red-object-legs { width: 30px; height: 60px; top: -65px; left: 5px; } /* Karmaşık Nesne (n) */
+        /* Kırmızı Saf Nesneler (image_8.png visual style, clip-path with shapes) */
+        .red-object { position: absolute; background-color: rgb(185, 28, 28); border: 2px solid #555; transition: transform 0.2s ease; top: -35px; left: 2.5px; }
         
-        /* 2D Shadow Pieces (Anatomical Parts) */
-        .shadow-piece { position: absolute; transition: top 0.3s ease, left 0.3s ease, opacity 0.3s ease, filter 0.3s ease; filter: blur(4px); mix-blend-mode: multiply; }
-        .shadow-piece-head { width: 60px; height: 60px; border-radius: 50%; background-color: rgba(15, 15, 15, 0.95); }
-        .shadow-piece-body { width: 100px; height: 160px; background-color: rgba(20, 20, 20, 0.95); /* A-shape will be done via clipping in JS */ }
-        .shadow-piece-legs { width: 60px; height: 120px; background-color: rgba(10, 10, 10, 0.95); /* n-shape will be done via clipping in JS */ }
+        /* Slider 1 -> Sol Nesne (Yuvarlak) */
+        .red-object-head { width: 30px; height: 30px; border-radius: 50%; }
         
-        /* True Silhouette Mask (SVG path) */
+        /* Slider 2 -> Orta Nesne (Vücut/A-shape from image_8.png) */
+        .red-object-body { width: 45px; height: 70px; top: -75px; left: 2.5px; 
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); /* Placeholder A-shape */
+        }
+        
+        /* Slider 3 -> Sağ Nesne (Bacaklar/n-shape from image_8.png) */
+        .red-object-legs { width: 30px; height: 50px; top: -55px; left: 2.5px; 
+            clip-path: polygon(15% 0%, 85% 0%, 85% 100%, 70% 100%, 70% 20%, 30% 20%, 30% 100%, 15% 100%); /* Placeholder n-shape */
+        }
+        
+        /* Siyah Gölge (Oda 203 True Silhouette) - Snap noktası en alçak sütunun sağında */
         #true-child-silhouette { position: absolute; width: 120px; height: 180px; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, filter 0.3s ease; fill: #111; filter: drop-shadow(0 0 10px #f97316) blur(2px); mix-blend-mode: multiply; z-index: 50; }
         #true-child-silhouette.revealed { visibility: visible; opacity: 1; filter: drop-shadow(0 0 15px #f97316) blur(1px); fill: #111; }
 
@@ -110,7 +115,7 @@
                             <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Endüstriyel Sistem Mühendisliği</p>
                             <p class="text-sm text-gray-400 mb-1 italic">Python, Blender API, SolidWorks Composer</p>
                             <p class="text-gray-300 text-sm mb-4 leading-relaxed">
-                                Savunma/Havacılık standartlarına (S1000D) uyumlu teknik dokümantasyon platformu tasarladım. Python betikleriyle Blender ve SolidWorks Composer süreçlerini otomatize edip, Etkileşimli Teknik El Kitabı (IETM) oynatıcısını mühendislikten üretime entegre ettim.
+                                Savunma/Havacılık standartlarına (S1000D) uyumlu teknik dokümantasyon platformu tasarladım. Python betikleriyle Blender ve SolidWorks Composer süreçlerini otomatize edip, Etkileşimli Teknik El Kitabı (IETM) oynatıcı yazılımını mühendislikten üretime entegre ettim.
                             </p>
                         </div>
                     </div>
@@ -173,19 +178,15 @@
                 
                 <div class="flex-grow flex flex-col items-center relative overflow-hidden">
                     <div id="shadow-grid">
-                        <div class="column-structure column-structure-1" id="colA"><div class="red-object red-object-head"></div></div>
-                        <div class="column-structure column-structure-2" id="colB"><div class="red-object red-object-body"></div></div>
-                        <div class="column-structure column-structure-3" id="colC"><div class="red-object red-object-legs"></div></div>
-                        
-                        <div class="shadow-piece shadow-piece-head" id="blobA"></div>
-                        <div class="shadow-piece shadow-piece-body" id="blobB"></div>
-                        <div class="shadow-piece shadow-piece-legs" id="blobC"></div>
+                        <div class="column-structure column-structure-1" id="colA"><div class="red-object red-object-head">Head</div></div>
+                        <div class="column-structure column-structure-2" id="colB"><div class="red-object red-object-body">Body</div></div>
+                        <div class="column-structure column-structure-3" id="colC"><div class="red-object red-object-legs">Legs</div></div>
                         
                         <svg id="true-child-silhouette" viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg">
                             <path d="M60,25c-5,0-9,4-9,9s4,9,9,9c5,0,9-4,9-9S65,25,60,25z M60,48c-8,0-15,6-15,14v35c0,1,1,2,2,2h6v56h14v-56h6c1,0,2-1,2-2V62C75,54,68,48,60,48z M51,62v32h-1c-1,0-2,1-2,2v22h4v-22h1V62H51z M69,62v32h1c1,0,2,1,2,2v22h-4v-22h-1V62H69z"/>
                         </svg>
                     </div>
-                    <p class="text-gray-600 text-xs font-mono mt-3 uppercase tracking-widest cursor-default">[ System Status: Confirmed - Analyzing ]</p>
+                    <p class="text-gray-600 text-xs font-mono mt-3 uppercase tracking-widest cursor-default">[ System Status: Confirmed - Analyzing Matrix ]</p>
                 </div>
 
                 <div class="w-full lg:w-[320px] flex flex-col shrink-0">
@@ -288,8 +289,7 @@
     </script>
 
     <script>
-        // Win Condition Target Angles (in degrees)
-        // Adjust these to change the puzzle difficulty
+        // Win Condition Target Angles (90 degrees means face-on, creating full shape)
         const targetA = 90; 
         const targetB = 90; 
         const targetC = 90; 
@@ -298,43 +298,16 @@
         const colA = document.getElementById('colA');
         const colB = document.getElementById('colB');
         const colC = document.getElementById('colC');
-        const blobA = document.getElementById('blobA');
-        const blobB = document.getElementById('blobB');
-        const blobC = document.getElementById('blobC');
         const silhouette = document.getElementById('true-child-silhouette');
         const statusText = document.getElementById('game-status-text');
         
-        // Initial setup for shadow pieces and true silhouette
+        // Initial setup for snapping point (sağdaki sütunun sağında duvarda)
         const gridWidth = document.getElementById('shadow-grid').offsetWidth;
-        blobA.style.left = (gridWidth * 0.45) + 'px';
-        blobB.style.left = (gridWidth * 0.45) + 'px';
-        blobC.style.left = (gridWidth * 0.45) + 'px';
-        silhouette.style.left = (gridWidth * 0.45) + 'px';
-        silhouette.style.top = (380 * 0.05) + 'px'; // Snap-to win position
-
-        // Function to create complex shadow shapes (A and n) via clip-path
-        function getBodyClipPath(angle) {
-            // A-shape body (simplified), stretches based on angle (rotateY simulation)
-            const stretch = Math.cos((angle - 90) * (Math.PI / 180)); // 0 when 90, 1 when 0/180
-            return `polygon(
-                ${50 - stretch * 40}% 0%, ${50 + stretch * 40}% 0%, /* Top width */
-                ${65 + stretch * 30}% 100%, ${65 + stretch * 30}% 100%, /* Right bottom */
-                ${35 - stretch * 30}% 100%, ${35 - stretch * 30}% 100%  /* Left bottom */
-            )`;
-        }
-
-        function getLegsClipPath(angle) {
-            // n-shape legs, stretches based on angle
-            const stretch = Math.cos((angle - 90) * (Math.PI / 180));
-            return `polygon(
-                ${20 - stretch * 15}% 0%, ${80 + stretch * 15}% 0%, /* Top width */
-                ${80 + stretch * 15}% 100%, ${65 + stretch * 15}% 100%, /* Right leg right edge */
-                ${65 + stretch * 15}% 20%, /* Gap right edge */
-                ${35 - stretch * 15}% 20%, /* Gap left edge */
-                ${35 - stretch * 15}% 100%, /* Left leg left edge */
-                ${20 - stretch * 15}% 100%  /* Left leg right edge */
-            )`;
-        }
+        const gridHeight = document.getElementById('shadow-grid').offsetHeight;
+        const colC_Left = colC.offsetLeft;
+        const colC_Width = colC.offsetWidth;
+        silhouette.style.left = (colC_Left + colC_Width + 20) + 'px'; // En sağda
+        silhouette.style.top = (380 * 0.05) + 'px'; // Snap top position
 
         function updateMatrix() {
             const valA = parseInt(document.getElementById('sliderA').value);
@@ -346,54 +319,30 @@
             document.getElementById('valB').innerText = valB + '°';
             document.getElementById('valC').innerText = valC + '°';
 
-            // 1. Rotate 3D Column structures (image_8.png visual)
-            colA.querySelector('.red-object').style.transform = `rotateY(${valA - 90}deg)`;
-            colB.querySelector('.red-object').style.transform = `rotateY(${valB - 90}deg)`;
-            colC.querySelector('.red-object').style.transform = `rotateY(${valC - 90}deg)`;
+            // 1. Rotate 3D Column structures (saf 2D minimalist view)
+            colA.style.transform = `rotateY(${valA - 90}deg)`;
+            colB.style.transform = `rotateY(${valB - 90}deg)`;
+            colC.style.transform = `rotateY(${valC - 90}deg)`;
 
-            // 2. Distort/Calculate Shadow Shapes based on angles
-            // blobA (Head - Yuvarlak) gets oval/narrow based on angle
-            blobA.style.transform = `scaleX(${Math.abs(Math.cos((valA - 90) * (Math.PI / 180))) + 0.1})`;
-            
-            // blobB (Body - A) clip-path updates
-            blobB.style.clipPath = getBodyClipPath(valB);
-            
-            // blobC (Legs - n) clip-path updates
-            blobC.style.clipPath = getLegsClipPath(valC);
-
-            // 3. Position Shadows dikey (off-targets initially)
-            // They should move towards snapping points as targets are approached
-            const topMargin = 0.05 * 380; // snapping point top
-            const headSnap = topMargin + 25; // Snap positions relative to win silhouette
-            const bodySnap = topMargin + 48;
-            const legsSnap = topMargin + 104;
-
-            // Distribute vertically when off-target
-            blobA.style.top = (380 * 0.1 + (valA - 90) * 0.3) + 'px'; 
-            blobB.style.top = (380 * 0.05 + (valB - 90) * 0.1) + 'px'; 
-            blobC.style.top = (380 * 0.15 + (valC - 90) * 0.5) + 'px'; 
-
-            // 4. Check Win Condition (Ticking Rooms Oda 203 logic)
+            // 2. Check Win Condition (Ticking Rooms Room 203 logic)
+            // Three shadows must merge to create true silhouette
             if (Math.abs(valA - targetA) <= marginOfError && 
                 Math.abs(valB - targetB) <= marginOfError && 
                 Math.abs(valC - targetC) <= marginOfError) {
                 
                 // --- WIN TRIGGERED ---
-                // Snap blobs to merge completely (anatomy-based dikey birleşme)
-                blobA.style.top = `${headSnap}px`;
-                blobB.style.top = `${bodySnap}px`;
-                blobC.style.top = `${legsSnap}px`;
-                blobA.style.left = `${silhouette.offsetLeft}px`;
-                blobB.style.left = `${silhouette.offsetLeft}px`;
-                blobC.style.left = `${silhouette.offsetLeft}px`;
-
-                blobA.style.filter = "blur(1px) opacity(0)";
-                blobB.style.filter = "blur(1px) opacity(0)";
-                blobC.style.filter = "blur(1px) opacity(0)";
+                // Snap columns and hide red objects, reveal true silhouette
+                colA.style.transform = `rotateY(0deg)`;
+                colB.style.transform = `rotateY(0deg)`;
+                colC.style.transform = `rotateY(0deg)`;
                 
-                // Reveal true child silhouette
                 silhouette.classList.add('revealed');
                 statusText.classList.add('show');
+                
+                // Hide red objects to simulate "merged" view
+                colA.querySelector('.red-object').style.opacity = '0';
+                colB.querySelector('.red-object').style.opacity = '0';
+                colC.querySelector('.red-object').style.opacity = '0';
                 
                 // Vibrate feedback (optional, safe for mobile desktop request)
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
@@ -401,14 +350,11 @@
                 // --- NOT WINNING (System unstable) ---
                 silhouette.classList.remove('revealed');
                 statusText.classList.remove('show');
-                blobA.style.filter = "blur(4px) opacity(1)";
-                blobB.style.filter = "blur(4px) opacity(1)";
-                blobC.style.filter = "blur(4px) opacity(1)";
                 
-                // Restore off-target horizontal positions
-                blobA.style.left = `${gridWidth * 0.45}px`;
-                blobB.style.left = `${gridWidth * 0.45}px`;
-                blobC.style.left = `${gridWidth * 0.45}px`;
+                // Restore red objects visibility
+                colA.querySelector('.red-object').style.opacity = '1';
+                colB.querySelector('.red-object').style.opacity = '1';
+                colC.querySelector('.red-object').style.opacity = '1';
             }
         }
     </script>
