@@ -9,8 +9,9 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #121212; color: #e5e7eb; }
         .vibrant-border { border-bottom: 2px solid #f97316; }
-        .card { background-color: #1e1e1e; transition: transform 0.3s ease; }
-        .card:hover { transform: translateY(-5px); }
+        .card { background-color: #1e1e1e; transition: all 0.3s ease; overflow: hidden; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -10px rgba(249, 115, 22, 0.3); }
+        .project-image { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #333; }
     </style>
 </head>
 <body class="antialiased">
@@ -35,31 +36,68 @@
     </section>
 
     <section class="max-w-5xl mx-auto mb-16 px-6">
-        <h2 class="text-3xl font-bold mb-8 text-white vibrant-border inline-block">Seçilmiş Projeler</h2>
-        <div class="grid md:grid-cols-2 gap-6">
+        <h2 class="text-3xl font-bold mb-8 text-white vibrant-border inline-block">Seçilmiş Projeler & Vaka Çalışmaları</h2>
+        <div class="grid md:grid-cols-2 gap-8">
             
-            <div class="card p-6 rounded-2xl border border-gray-800">
-                <h3 class="text-xl font-bold text-orange-500 mb-2">Ticking Rooms</h3>
-                <p class="text-sm text-gray-400 mb-4 italic">Unreal Engine 5 | Atmospheric Horror</p>
-                <p class="text-gray-300 text-sm">Atmosferik tasarım ve karmaşık bulmaca mekaniklerinin ön planda olduğu, psikolojik gerilim türünde bir oyun projesi.</p>
+            <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
+                <img src="s1000d.jpg" alt="S1000D Tool UI Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=S1000D+Tool+Visual'">
+                <div class="p-6 flex flex-col justify-between flex-grow">
+                    <div>
+                        <h3 class="text-xl font-bold text-orange-500 mb-2">S1000D Tool & IETM Player</h3>
+                        <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Endüstriyel Yazılım & Tooling</p>
+                        <p class="text-sm text-gray-400 mb-1 italic">Python, Blender API, SolidWorks Composer</p>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Havacılık/Savunma standartlarında (S1000D) teknik dokümantasyon üretmek ve karmaşık jeneratör sistemlerini görselleştirmek için özel bir araç geliştirdim. Python betikleriyle otomasyon sağlayıp, Etkileşimli Teknik El Kitabı (IETM) oynatıcısını hayata geçirdim.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div class="card p-6 rounded-2xl border border-gray-800">
-                <h3 class="text-xl font-bold text-orange-500 mb-2">S1000D Documentation Tool</h3>
-                <p class="text-sm text-gray-400 mb-4 italic">Python | Engineering Tech</p>
-                <p class="text-gray-300 text-sm">Havacılık ve savunma sanayii standartlarında (S1000D) teknik dokümantasyon üreten ve verileri optimize eden özel yazılım aracı.</p>
+            <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
+                <img src="tickingrooms.jpg" alt="Ticking Rooms Gameplay Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Ticking+Rooms+Visual'">
+                <div class="p-6 flex flex-col justify-between flex-grow">
+                    <div>
+                        <h3 class="text-xl font-bold text-orange-500 mb-2">Ticking Rooms</h3>
+                        <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Game Development</p>
+                        <p class="text-sm text-gray-400 mb-1 italic">Unreal Engine 5 | C++ & Blueprints</p>
+                        <p class="text-gray-300 text-sm mb-4">
+                            <strong>Geliştirme Aşamasında:</strong> Atmosferik tasarım ve karmaşık bulmaca mekaniklerinin ön planda olduğu, psikolojik gerilim türünde bağımsız bir oyun projesi. Level tasarımı, aydınlatma ve mekaniklerin tamamı tarafımca kurgulanmaktadır.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div class="card p-6 rounded-2xl border border-gray-800">
-                <h3 class="text-xl font-bold text-orange-500 mb-2">IETM Player & Blender Plugins</h3>
-                <p class="text-sm text-gray-400 mb-4 italic">Python & 3D Workflow</p>
-                <p class="text-gray-300 text-sm">Etkileşimli Teknik El Kitabı oynatıcı ve 3D modelleme süreçlerini otomatize eden özel Blender Python eklentileri.</p>
+            <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
+                <img src="simulations.jpg" alt="HoloLens AR Simulation Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Simulations+Visual'">
+                <div class="p-6 flex flex-col justify-between flex-grow">
+                    <div>
+                        <h3 class="text-xl font-bold text-orange-500 mb-2">HoloLens 2 AR & UGV Simülasyonu</h3>
+                        <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Simülasyon & XR</p>
+                        <p class="text-sm text-gray-400 mb-1 italic">Unreal Engine, AR, Mekatronik Entegrasyon</p>
+                        <p class="text-gray-300 text-sm mb-4">
+                            HoloLens 2 ile interaktif kamyon tekerleği söküm eğitim simülasyonu ve Unreal Engine üzerinde modellenip kontrol edilen İnsansız Kara Aracı (UGV/Tank) simülasyonu ile fiziksel mühendislik süreçlerini sanal ortama taşıdım.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div class="card p-6 rounded-2xl border border-gray-800">
-                <h3 class="text-xl font-bold text-orange-500 mb-2">Steam Published Games</h3>
-                <p class="text-sm text-gray-400 mb-4 italic">Market Owner Simulator & JudgeSim</p>
-                <p class="text-gray-300 text-sm">Steam platformunda yayınlanmış, oyun döngüsü ve kullanıcı deneyimi üzerine yoğunlaşılmış projeler.</p>
+            <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
+                <img src="marketowner.jpg" alt="Market Owner Simulator Steam Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Market+Owner+Visual'">
+                <div class="p-6 flex flex-col justify-between flex-grow">
+                    <div>
+                        <h3 class="text-xl font-bold text-orange-500 mb-2">Steam Published Game</h3>
+                        <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Commercial Release</p>
+                        <p class="text-sm text-gray-400 mb-1 italic">Game Design, Core Loop & Release</p>
+                        <p class="text-gray-300 text-sm mb-4">
+                            Ana geliştirici (Main Developer) olarak bağımsız stüdyo mantığıyla geliştirilip Steam platformunda global oyunculara sunulmuş, pazar dinamiklerine uygun oyun projesi.
+                        </p>
+                        <div class="mt-4">
+                            <a href="https://store.steampowered.com/app/2490650/Market_Owner_Simulator/" target="_blank" class="inline-block bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold py-2 px-4 rounded-lg transition-colors">
+                                Steam'de Görüntüle ➔
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -80,7 +118,7 @@
     </section>
 
     <footer class="max-w-5xl mx-auto pb-10 px-6 text-center text-gray-500 text-sm border-t border-gray-800 pt-8">
-        <p>© 2024 Alperen Çolak. Bu site Claude & Gemini yardımıyla inşa edilmiştir.</p>
+        <p>© 2026 Alperen Çolak. Bu site Claude & Gemini yardımıyla inşa edilmiştir.</p>
     </footer>
 
 </body>
