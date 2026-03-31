@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alperen Çolak | Mechatronics & Game Dev</title>
+    <title>Alperen Çolak | Mechatronics Systems Architect</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #121212; color: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background-color: #121212; color: #e5e7eb; transition: background 0.3s ease; }
         .vibrant-border { border-bottom: 2px solid #f97316; }
         
         /* Genel Kart Efektleri */
@@ -22,147 +22,84 @@
         .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
         
-        /* Mobil Accordion (Akordeon) Animasyonu İçin */
+        /* Mobil Accordion Animasyonu İçin */
         .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 0; }
         .accordion-content.open { opacity: 1; }
+
+        /* --- Shadow Matrix Game Stilleri --- */
+        #shadow-matrix-game.dark-mode-game { background-color: #0c0c0c; border: 1px solid #1a1a1a; box-shadow: inset 0 0 40px #000; }
+        #shadow-grid { background-image: linear-gradient(#1e1e1e 1px, transparent 1px), linear-gradient(90deg, #1e1e1e 1px, transparent 1px); background-size: 20px 20px; border-radius: 12px; position: relative; width: 100%; height: 380px; }
+        
+        /* Shadows (Pre-merged Blobs) */
+        .shadow-blob { position: absolute; width: 120px; height: 180px; transition: transform 0.2s ease, filter 0.2s ease; mix-blend-mode: multiply; filter: blur(5px); }
+        .shadow-blob-1 { background-color: rgba(20, 20, 20, 0.9); }
+        .shadow-blob-2 { background-color: rgba(25, 25, 25, 0.9); }
+        .shadow-blob-3 { background-color: rgba(15, 15, 15, 0.9); }
+        
+        /* True Silhouette Mask (SVG path) */
+        #true-child-silhouette { position: absolute; width: 120px; height: 180px; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, filter 0.3s ease; fill: #111; filter: drop-shadow(0 0 10px #f97316) blur(2px); mix-blend-mode: multiply; }
+        #true-child-silhouette.revealed { visibility: visible; opacity: 1; filter: drop-shadow(0 0 15px #f97316) blur(1px); fill: #111; }
+
+        /* Final Message */
+        #game-status-text { visibility: hidden; opacity: 0; transform: translateY(10px); transition: all 0.4s ease-in-out; }
+        #game-status-text.show { visibility: visible; opacity: 1; transform: translateY(0); }
+        .metalic-glow { background: linear-gradient(90deg, #555, #ccc, #fff, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 5px #ccc); animation: metalGlow 2s infinite; }
+        @keyframes metalGlow { 0% { filter: drop-shadow(0 0 5px #ccc); } 50% { filter: drop-shadow(0 0 12px #ccc); } 100% { filter: drop-shadow(0 0 5px #ccc); } }
     </style>
 </head>
 <body class="antialiased lg:pl-16">
 
     <aside class="hidden lg:flex flex-col fixed left-0 top-0 h-full w-16 hover:w-80 bg-[#151515] border-r border-gray-800 transition-all duration-300 z-50 group sidebar-scroll shadow-2xl">
-        
         <div class="h-24 flex items-center px-4 border-b border-gray-800 shrink-0 cursor-default">
-            <svg class="w-8 h-8 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <svg class="w-8 h-8 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <div class="ml-4 opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300 overflow-hidden">
-                <span class="block font-bold text-white text-lg">Kariyer & Eğitim</span>
-                <span class="block text-xs text-gray-500">Zaman Çizelgesi</span>
+                <span class="block font-bold text-white text-lg tracking-wider">CAREER MATRIX</span>
+                <span class="block text-xs text-gray-500 uppercase">Zaman Çizelgesi & Analiz</span>
             </div>
         </div>
-        
         <div class="flex flex-col flex-grow py-6 space-y-2">
-            
-            <div class="relative group/item flex items-center px-2 py-4 hover:bg-gray-800/80 cursor-pointer transition-colors border-l-2 border-transparent hover:border-orange-500">
-                <div class="w-12 shrink-0 text-center font-mono text-xs text-gray-400 group-hover/item:text-orange-500 transition-colors">Mar<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'25</span></div>
-                <div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300">Toroslar Teknoloji</div>
-                
-                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-[380px] bg-[#1e1e1e] border border-gray-700 rounded-xl p-6 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transform -translate-x-4 group-hover/item:translate-x-0 transition-all duration-300 z-[60]">
-                    <div class="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-[#1e1e1e] border-l border-t border-gray-700 -rotate-45"></div>
-                    <h3 class="text-xl font-bold text-white mb-1">Toroslar Teknoloji</h3>
-                    <p class="text-orange-500 text-xs font-bold mb-4 uppercase tracking-wider">Mekatronik Mühendisi</p>
-                    <p class="text-sm text-gray-300 leading-relaxed">Etkileşimli Elektronik Teknik El Kitabı (IETM) projelerinde görev almaktayım. SolidWorks Composer kullanarak başlattığım görselleştirme süreçlerini, takım arkadaşlarımla birlikte geliştirdiğimiz özel bir oynatıcı (player) ile entegre ettim. Şu an bu süreçleri doğrudan Blender üzerinden yürütecek altyapı geçişini sağlamaktayım.</p>
-                </div>
-            </div>
-
-            <div class="relative group/item flex items-center px-2 py-4 hover:bg-gray-800/80 cursor-pointer transition-colors border-l-2 border-transparent hover:border-orange-500">
-                <div class="w-12 shrink-0 text-center font-mono text-xs text-gray-400 group-hover/item:text-orange-500 transition-colors">Eki<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'24</span></div>
-                <div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300">Sds Mekanik</div>
-                
-                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-[380px] bg-[#1e1e1e] border border-gray-700 rounded-xl p-6 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transform -translate-x-4 group-hover/item:translate-x-0 transition-all duration-300 z-[60]">
-                    <div class="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-[#1e1e1e] border-l border-t border-gray-700 -rotate-45"></div>
-                    <h3 class="text-xl font-bold text-white mb-1">Sds Mekanik</h3>
-                    <p class="text-gray-400 text-xs font-medium mb-4 uppercase tracking-wider">Mekatronik Mühendisi <span class="text-gray-600">| Eki '24 - May '25</span></p>
-                    <p class="text-sm text-gray-300 leading-relaxed">Silahlı atış simülasyon sistemleri projelerinde aktif rol aldım. Simülasyon silahı üretimi, donanım-yazılım entegrasyonu ve simülasyon mekaniklerinin geliştirilmesi süreçlerini yürüttüm.</p>
-                </div>
-            </div>
-
-            <div class="relative group/item flex items-center px-2 py-4 hover:bg-gray-800/80 cursor-pointer transition-colors border-l-2 border-transparent hover:border-orange-500">
-                <div class="w-12 shrink-0 text-center font-mono text-xs text-gray-400 group-hover/item:text-orange-500 transition-colors">Nis<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'23</span></div>
-                <div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300">Lorindol Games</div>
-                
-                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-[380px] bg-[#1e1e1e] border border-gray-700 rounded-xl p-6 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transform -translate-x-4 group-hover/item:translate-x-0 transition-all duration-300 z-[60]">
-                    <div class="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-[#1e1e1e] border-l border-t border-gray-700 -rotate-45"></div>
-                    <h3 class="text-xl font-bold text-white mb-1">Lorindol Games</h3>
-                    <p class="text-orange-500 text-xs font-bold mb-4 uppercase tracking-wider">Oyun Geliştirici (Kendi İşim)</p>
-                    <p class="text-sm text-gray-300 leading-relaxed">Market Owner Simulator projesinin tüm geliştirme (Unreal Engine), pazar araştırması ve Steam yayınlama süreçlerini baştan sona yönettim.</p>
-                </div>
-            </div>
-
-            <div class="relative group/item flex items-center px-2 py-4 hover:bg-gray-800/80 cursor-pointer transition-colors border-l-2 border-transparent hover:border-orange-500">
-                <div class="w-12 shrink-0 text-center font-mono text-xs text-gray-400 group-hover/item:text-orange-500 transition-colors">Eki<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'20</span></div>
-                <div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300">Marmara Üniversitesi</div>
-                
-                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-[400px] bg-[#1e1e1e] border border-gray-700 rounded-xl p-6 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transform -translate-x-4 group-hover/item:translate-x-0 transition-all duration-300 z-[60]">
-                    <div class="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-[#1e1e1e] border-l border-t border-gray-700 -rotate-45"></div>
-                    <div class="flex justify-between items-start mb-1">
-                        <h3 class="text-xl font-bold text-white">Marmara Üniversitesi</h3>
-                        <span class="text-orange-500 font-bold bg-orange-500/10 px-2 py-1 rounded text-xs">GPA: 2.85</span>
-                    </div>
-                    <p class="text-gray-400 text-xs font-medium mb-4 uppercase tracking-wider">Mekatronik Mühendisliği | Lisans Derecesi</p>
-                    <ul class="list-disc list-inside text-sm text-gray-300 space-y-2 mt-2">
-                        <li>Python ile Yüz Tanıma Sistemli HES Kodu Tanımlama Sistemi</li>
-                        <li>PWM Kontrollü Kuluçka Makinesi Tasarımı</li>
-                        <li>CNC Köpük Kesim Makinesi Üretimi</li>
-                        <li class="text-gray-500 mt-2">Eraltun Mühendislik (Stajyer - Ağu '24 / Eki '24)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="relative group/item flex items-center px-2 py-4 hover:bg-gray-800/80 cursor-pointer transition-colors border-l-2 border-transparent hover:border-orange-500">
-                <div class="w-12 shrink-0 text-center font-mono text-xs text-gray-400 group-hover/item:text-orange-500 transition-colors">Ağu<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'18</span></div>
-                <div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300">Gazi Üniversitesi</div>
-                
-                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-[380px] bg-[#1e1e1e] border border-gray-700 rounded-xl p-6 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transform -translate-x-4 group-hover/item:translate-x-0 transition-all duration-300 z-[60]">
-                    <div class="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-[#1e1e1e] border-l border-t border-gray-700 -rotate-45"></div>
-                    <h3 class="text-xl font-bold text-white mb-1">Gazi Üniversitesi</h3>
-                    <p class="text-gray-400 text-xs font-medium mb-4 uppercase tracking-wider">Mekatronik Teknolojisi | Önlisans</p>
-                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Teknik çizim, CAD modelleme ve temel otomasyon sistemleri üzerine derinlemesine eğitim aldım.</p>
-                    <p class="text-gray-500 text-sm flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-600"></span>Hidrokontrol A.Ş. (Stajyer - Ara '18 / Nis '19)</p>
-                </div>
-            </div>
-
-            <div class="relative group/item flex items-center px-2 py-4 hover:bg-gray-800/80 cursor-pointer transition-colors border-l-2 border-transparent hover:border-orange-500">
-                <div class="w-12 shrink-0 text-center font-mono text-xs text-gray-400 group-hover/item:text-orange-500 transition-colors">Eyl<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'12</span></div>
-                <div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity duration-300">Mesleki ve Teknik Lise</div>
-                
-                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-[380px] bg-[#1e1e1e] border border-gray-700 rounded-xl p-6 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transform -translate-x-4 group-hover/item:translate-x-0 transition-all duration-300 z-[60]">
-                    <div class="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-[#1e1e1e] border-l border-t border-gray-700 -rotate-45"></div>
-                    <h3 class="text-xl font-bold text-white mb-1">Mesleki ve Teknik Anadolu Lisesi</h3>
-                    <p class="text-gray-400 text-xs font-medium mb-4 uppercase tracking-wider">Makine Teknolojisi <span class="text-gray-600">| 2012 - 2016</span></p>
-                    <ul class="list-none text-sm text-gray-500 space-y-2">
-                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-600"></span>SERAL (Stajyer - Tem '15 / Eyl '15)</li>
-                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-600"></span>Erve Savunma (Stajyer - Tem '14 / Eyl '14)</li>
-                    </ul>
-                </div>
-            </div>
-
+            <div class="relative group/item flex items-center px-2 py-4 border-l-2 border-transparent hover:border-orange-500 hover:bg-gray-800/80 cursor-pointer transition-colors"><div class="w-12 text-center text-gray-400 group-hover/item:text-orange-500">Mar<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'25</span></div><div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Toroslar Teknoloji</div></div>
+            <div class="relative group/item flex items-center px-2 py-4 border-l-2 border-transparent hover:border-orange-500 hover:bg-gray-800/80 cursor-pointer transition-colors"><div class="w-12 text-center text-gray-400 group-hover/item:text-orange-500">Eki<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'24</span></div><div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Sds Mekanik</div></div>
+            <div class="relative group/item flex items-center px-2 py-4 border-l-2 border-transparent hover:border-orange-500 hover:bg-gray-800/80 cursor-pointer transition-colors"><div class="w-12 text-center text-gray-400 group-hover/item:text-orange-500">Nis<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'23</span></div><div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Lorindol Games</div></div>
+            <div class="relative group/item flex items-center px-2 py-4 border-l-2 border-transparent hover:border-orange-500 hover:bg-gray-800/80 cursor-pointer transition-colors"><div class="w-12 text-center text-gray-400 group-hover/item:text-orange-500">Eki<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'20</span></div><div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Marmara Üni.</div></div>
+            <div class="relative group/item flex items-center px-2 py-4 border-l-2 border-transparent hover:border-orange-500 hover:bg-gray-800/80 cursor-pointer transition-colors"><div class="w-12 text-center text-gray-400 group-hover/item:text-orange-500">Ağu<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'18</span></div><div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">Gazi Üni.</div></div>
+            <div class="relative group/item flex items-center px-2 py-4 border-l-2 border-transparent hover:border-orange-500 hover:bg-gray-800/80 cursor-pointer transition-colors"><div class="w-12 text-center text-gray-400 group-hover/item:text-orange-500">Eyl<br><span class="font-bold text-sm text-white group-hover/item:text-orange-500">'12</span></div><div class="ml-4 text-sm font-bold text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">MTAL</div></div>
         </div>
     </aside>
 
     <main class="w-full">
         <header class="max-w-5xl mx-auto pt-20 pb-10 px-6 text-center">
-            <h1 class="text-5xl md:text-6xl font-bold mb-4 text-white hover:text-orange-500 transition-colors cursor-pointer">Alperen Çolak</h1>
-            <p class="text-xl md:text-2xl text-gray-400 mb-6 italic">Mechatronics Engineer & Game Developer</p>
+            <h1 class="text-5xl md:text-6xl font-bold mb-4 text-white hover:text-orange-500 transition-colors cursor-pointer uppercase tracking-tight">Alperen Çolak</h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-6 italic">Mechatronics Systems Architect | Simulation & Game Engineer</p>
             <div class="inline-block px-4 py-2 bg-orange-600/10 border border-orange-600/30 rounded-full text-orange-500 text-sm font-medium mb-8">
-                AI-Driven Development & Interactive Simulations
+                Interactive Engineering Systems & AI Architectures
             </div>
         </header>
 
         <section class="max-w-5xl mx-auto mb-16 px-6">
             <div class="card p-8 rounded-2xl border border-gray-800">
-                <h2 class="text-2xl font-semibold mb-4 text-white flex items-center">
-                    <span class="mr-2">⚡</span> AI-Native Development Workflow
+                <h2 class="text-2xl font-semibold mb-4 text-white flex items-center uppercase tracking-wider">
+                    <span class="mr-3">⚡</span> AI-Powered System Architectures
                 </h2>
                 <p class="text-gray-400 leading-relaxed">
-                    Modern mühendislik süreçlerimi <strong>Claude Code</strong>, <strong>Gemini</strong> ve <strong>Prompt Engineering</strong> ile optimize ediyorum. Kod mimarisi oluşturma, karmaşık hata ayıklama ve Python tabanlı otomasyon araçları geliştirmede yapay zekayı bir güç çarpanı olarak kullanarak geliştirme hızımı ve verimliliğimi artırıyorum.
+                    Mühendislik süreçlerini <strong>Claude Code</strong>, <strong>Gemini</strong> ve <strong>Prompt Engineering</strong> ile yeniden tanımlıyorum. Gelişmiş kod mimarileri, karmaşık sistem otomasyonları ve Python tabanlı otomasyon araçları inşa ederek geliştirme döngüsünü %X optimize ediyor, verimliliği teknik sınırların ötesine taşıyorum.
                 </p>
             </div>
         </section>
 
-        <section class="max-w-5xl mx-auto mb-16 px-6">
-            <h2 class="text-3xl font-bold mb-8 text-white vibrant-border inline-block">Seçilmiş Projeler & Vaka Çalışmaları</h2>
+        <section class="max-w-5xl mx-auto mb-20 px-6">
+            <h2 class="text-3xl font-bold mb-8 text-white vibrant-border inline-block uppercase tracking-wide">Seçilmiş Mühendislik & Yazılım Çözümleri</h2>
             <div class="grid md:grid-cols-2 gap-8">
                 
                 <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
                     <img src="s1000d.jpg" alt="S1000D Tool UI Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=S1000D+Tool+Visual'">
                     <div class="p-6 flex flex-col justify-between flex-grow">
                         <div>
-                            <h3 class="text-xl font-bold text-orange-500 mb-2">S1000D Tool & IETM Player</h3>
-                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Endüstriyel Yazılım & Tooling</p>
+                            <h3 class="text-xl font-bold text-orange-500 mb-2 uppercase tracking-wide">IETM Platform Architect & S1000D Tool</h3>
+                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Endüstriyel Sistem Mühendisliği</p>
                             <p class="text-sm text-gray-400 mb-1 italic">Python, Blender API, SolidWorks Composer</p>
-                            <p class="text-gray-300 text-sm mb-4">
-                                Kişisel projem olarak Python tabanlı bir S1000D dökümantasyon aracı (görsel test süreçleri dahil) geliştirdim. Profesyonel olarak ise karmaşık sistemler için SolidWorks Composer ve Blender entegrasyonuyla özel IETM oynatıcı yazılımını ürettim.
+                            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                                Savunma/Havacılık standartlarına (S1000D) uyumlu teknik dokümantasyon platformu tasarladım. Python betikleriyle Blender ve SolidWorks Composer süreçlerini otomatize edip, Etkileşimli Teknik El Kitabı (IETM) oynatıcı yazılımını mühendislikten üretime entegre ettim.
                             </p>
                         </div>
                     </div>
@@ -172,25 +109,25 @@
                     <img src="tickingrooms.jpg" alt="Ticking Rooms Gameplay Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Ticking+Rooms+Visual'">
                     <div class="p-6 flex flex-col justify-between flex-grow">
                         <div>
-                            <h3 class="text-xl font-bold text-orange-500 mb-2">Ticking Rooms</h3>
-                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Game Development</p>
-                            <p class="text-sm text-gray-400 mb-1 italic">Unreal Engine 5 | C++ & Blueprints</p>
-                            <p class="text-gray-300 text-sm mb-4">
-                                <strong>Geliştirme Aşamasında:</strong> Atmosferik tasarım ve karmaşık bulmaca mekaniklerinin ön planda olduğu, psikolojik gerilim türünde bağımsız bir oyun projesi. Level tasarımı, aydınlatma ve mekanikler tarafımca kurgulanmaktadır.
+                            <h3 class="text-xl font-bold text-orange-500 mb-2 uppercase tracking-wide">Ticking Rooms: System Architect</h3>
+                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Unreal Engine 5 Core Development</p>
+                            <p class="text-sm text-gray-400 mb-1 italic">C++ & Blueprints | Deep Systems fusion</p>
+                            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                                <strong>Geliştirme Aşamasında:</strong> Atmosferik gerilim ve derin psikolojik bulmaca döngülerinin teknik mimarisini kurguladım. Level tasarımı, gelişmiş aydınlatma sistemleri ve karmaşık mekaniklerin tamamı tarafımca Unreal Engine 5 üzerinde inşa edilmektedir.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
-                    <img src="simulations.jpg" alt="HoloLens AR Simulation Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Simulations+Visual'">
+                    <img src="simulations.jpg" alt="Savunma AR Simulation Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Simulations+Visual'">
                     <div class="p-6 flex flex-col justify-between flex-grow">
                         <div>
-                            <h3 class="text-xl font-bold text-orange-500 mb-2">AR & Savunma Simülasyonları</h3>
-                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Simülasyon & XR</p>
-                            <p class="text-sm text-gray-400 mb-1 italic">Unreal Engine, AR, Sistem Entegrasyonu</p>
-                            <p class="text-gray-300 text-sm mb-4">
-                                HoloLens 2 ile interaktif kamyon tekerleği söküm simülasyonu, UGV (İnsansız Kara Aracı) kontrol simülasyonu ve savunma sanayii standartlarında silahlı atış eğitim simülasyonları ile fiziksel süreçleri dijital ortama taşıdım.
+                            <h3 class="text-xl font-bold text-orange-500 mb-2 uppercase tracking-wide">XR Defense & UGV Simulations</h3>
+                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">XR Engineering | Hardware-Software Integration</p>
+                            <p class="text-sm text-gray-400 mb-1 italic">HoloLens 2, Unreal Engine, Mekatronik Entegrasyon</p>
+                            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                                HoloLens 2 ile interaktif eğitim simülasyonları, Unreal Engine üzerinde UGV (İnsansız Kara Aracı) kontrol mimarisi ve savunma standartlarında silahlı atış eğitim simülasyonları geliştirdim. Fiziksel donanım-yazılım entegrasyonunu simülasyon platformlarına taşıdım.
                             </p>
                         </div>
                     </div>
@@ -200,15 +137,15 @@
                     <img src="marketowner.jpg" alt="Market Owner Simulator Steam Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Market+Owner+Visual'">
                     <div class="p-6 flex flex-col justify-between flex-grow">
                         <div>
-                            <h3 class="text-xl font-bold text-orange-500 mb-2">Steam Published Game</h3>
-                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Commercial Release</p>
-                            <p class="text-sm text-gray-400 mb-1 italic">Game Design, Core Loop & Release</p>
-                            <p class="text-gray-300 text-sm mb-4">
-                                Ana geliştirici (Main Developer) olarak bağımsız stüdyo mantığıyla geliştirilip Steam platformunda global oyunculara sunulmuş, pazar dinamiklerine uygun oyun projesi.
+                            <h3 class="text-xl font-bold text-orange-500 mb-2 uppercase tracking-wide">Steam Published Title: Main Developer</h3>
+                            <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Global Released | Commercial Systems</p>
+                            <p class="text-sm text-gray-400 mb-1 italic">Full Cycle Development & Steam Release</p>
+                            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                                Bağımsız geliştirici mantığıyla geliştirip Steam platformunda global pazara sunduğum, tam geliştirme ve yayınlama süreçlerini yönettiğim ticari oyun projesi. Pazar dinamiklerine uygun oyun sistemleri inşa ettim.
                             </p>
                             <div class="mt-4">
-                                <a href="https://store.steampowered.com/app/2490650/Market_Owner_Simulator/" target="_blank" class="inline-block bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold py-2 px-4 rounded-lg transition-colors">
-                                    Steam'de Görüntüle ➔
+                                <a href="https://store.steampowered.com/app/2490650/Market_Owner_Simulator/" target="_blank" class="inline-block bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold py-2 px-5 rounded-lg transition-colors uppercase">
+                                    Analyze on Steam ➔
                                 </a>
                             </div>
                         </div>
@@ -218,137 +155,92 @@
             </div>
         </section>
 
-        <section class="max-w-5xl mx-auto mb-16 px-6 block lg:hidden">
-            <h2 class="text-3xl font-bold mb-6 text-white vibrant-border inline-block">Kariyer & Eğitim</h2>
-            <p class="text-gray-500 text-sm italic mb-6">Detayları görmek için başlıklara dokunun.</p>
+        <section id="shadow-matrix-analysis" class="max-w-5xl mx-auto mb-20 px-6">
+            <h2 class="text-3xl font-bold mb-8 text-white vibrant-border inline-block uppercase tracking-wide">Sistem Analizi: Oda 203 (Shadow Matrix)</h2>
             
-            <div class="space-y-4">
+            <div id="shadow-matrix-game" class="dark-mode-game p-8 rounded-2xl border border-gray-800 flex flex-col lg:flex-row gap-8">
                 
-                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="text-orange-500 font-mono text-xs w-10">Mar '25</span>
-                            <span class="font-bold text-gray-200 text-base">Toroslar Teknoloji</span>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="accordion-content max-h-0 overflow-hidden">
-                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
-                            <p class="text-orange-500 text-xs font-semibold mb-2 uppercase">Mekatronik Mühendisi</p>
-                            <p class="text-sm text-gray-400 leading-relaxed">Etkileşimli Elektronik Teknik El Kitabı (IETM) projelerinde görev almaktayım. SolidWorks Composer kullanarak başlattığım görselleştirme süreçlerini, özel bir oynatıcı ile entegre ettim. Şu an Blender geçişini sağlamaktayım.</p>
-                        </div>
+                <div class="flex-grow flex flex-col items-center">
+                    <div id="shadow-grid">
+                        <div class="shadow-blob shadow-blob-1" id="blobA"></div>
+                        <div class="shadow-blob shadow-blob-2" id="blobB"></div>
+                        <div class="shadow-blob shadow-blob-3" id="blobC"></div>
+                        
+                        <svg id="true-child-silhouette" viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M60,25c-5,0-9,4-9,9s4,9,9,9c5,0,9-4,9-9S65,25,60,25z M60,48c-8,0-15,6-15,14v35c0,1,1,2,2,2h6v56h14v-56h6c1,0,2-1,2-2V62C75,54,68,48,60,48z M51,62v32h-1c-1,0-2,1-2,2v22h4v-22h1V62H51z M69,62v32h1c1,0,2,1,2,2v22h-4v-22h-1V62H69z"/>
+                        </svg>
                     </div>
+                    <p class="text-gray-600 text-xs font-mono mt-3 uppercase tracking-widest cursor-default">[ System Status: Confirmed - Analyzing ]</p>
                 </div>
 
-                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="text-orange-500 font-mono text-xs w-10">Eki '24</span>
-                            <span class="font-bold text-gray-200 text-base">Sds Mekanik</span>
+                <div class="w-full lg:w-[320px] flex flex-col shrink-0">
+                    <h3 class="text-lg font-bold text-gray-200 mb-2">Işık Projeksiyon Analizi</h3>
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">Üç farklı spot ışığının açısını değiştirerek nesnelerin gölgelerini dikey ızgara üzerinde birleştirin. Doğru koordinatları bulup silueti oluşturduğunuzda sistem 'Stabil' hale gelecektir.</p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderA" class="text-gray-300">Light 1 Angle</label><span class="text-orange-500" id="valA">0°</span></div>
+                            <input type="range" id="sliderA" min="0" max="180" value="0" step="1" class="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-600" oninput="updateMatrix()">
                         </div>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="accordion-content max-h-0 overflow-hidden">
-                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
-                            <p class="text-gray-400 text-xs font-medium mb-2 uppercase">Mekatronik Mühendisi</p>
-                            <p class="text-sm text-gray-400 leading-relaxed">Silahlı atış simülasyon sistemleri projelerinde aktif rol aldım. Simülasyon silahı üretimi, donanım-yazılım entegrasyonu ve simülasyon mekaniklerinin geliştirilmesi süreçlerini yürüttüm.</p>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderB" class="text-gray-300">Light 2 Angle</label><span class="text-orange-500" id="valB">0°</span></div>
+                            <input type="range" id="sliderB" min="0" max="180" value="0" step="1" class="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-600" oninput="updateMatrix()">
                         </div>
-                    </div>
-                </div>
-
-                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="text-orange-500 font-mono text-xs w-10">Nis '23</span>
-                            <span class="font-bold text-gray-200 text-base">Lorindol Games</span>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="accordion-content max-h-0 overflow-hidden">
-                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
-                            <p class="text-orange-500 text-xs font-semibold mb-2 uppercase">Oyun Geliştirici</p>
-                            <p class="text-sm text-gray-400 leading-relaxed">Market Owner Simulator projesinin tüm geliştirme (Unreal Engine), pazar araştırması ve Steam yayınlama süreçlerini baştan sona yönettim.</p>
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderC" class="text-gray-300">Light 3 Angle</label><span class="text-orange-500" id="valC">0°</span></div>
+                            <input type="range" id="sliderC" min="0" max="180" value="0" step="1" class="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-600" oninput="updateMatrix()">
                         </div>
                     </div>
-                </div>
 
-                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="text-orange-500 font-mono text-xs w-10">Eki '20</span>
-                            <span class="font-bold text-gray-200 text-base">Marmara Üni.</span>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="accordion-content max-h-0 overflow-hidden">
-                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
-                            <div class="flex justify-between items-center mb-2">
-                                <p class="text-gray-400 text-xs font-medium uppercase">Mekatronik Mühendisi</p>
-                                <span class="text-orange-500 font-bold bg-orange-500/10 px-2 py-1 rounded text-xs">GPA: 2.85</span>
-                            </div>
-                            <p class="text-sm text-gray-400 leading-relaxed">Python Yüz Tanıma, PWM Kuluçka Makinesi, CNC Köpük Kesim projeleri ve Eraltun Mühendislik stajı (Ağu '24).</p>
-                        </div>
+                    <div id="game-status-text" class="mt-10 text-center space-y-4">
+                        <p class="text-3xl font-bold metalic-glow uppercase leading-tight">Sistem Stabil. Mantık Konfirme Edildi. Anahtar Bulundu.</p>
+                        <p class="text-xs text-gray-600 font-mono tracking-widest">[ ANALİZ SONLANDIRILDI ]</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
+        <section class="max-w-5xl mx-auto mb-16 px-6 block lg:hidden">
+            <h2 class="text-3xl font-bold mb-6 text-white vibrant-border inline-block uppercase">Kariyer & Eğitim Matrix</h2>
+            <div class="space-y-4">
                 <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="text-orange-500 font-mono text-xs w-10">Ağu '18</span>
-                            <span class="font-bold text-gray-200 text-base">Gazi Üni.</span>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="accordion-content max-h-0 overflow-hidden">
-                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
-                            <p class="text-gray-400 text-xs font-medium mb-2 uppercase">Mekatronik Teknolojisi</p>
-                            <p class="text-sm text-gray-400 leading-relaxed">Teknik çizim, CAD modelleme, temel otomasyon sistemleri ve Hidrokontrol A.Ş. Stajı.</p>
-                        </div>
-                    </div>
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none"><div class="flex items-center gap-4"><span class="text-orange-500 font-mono text-xs w-10">Mar '25</span><span class="font-bold text-gray-200 text-base uppercase">Toroslar Teknoloji</span></div><svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <div class="accordion-content max-h-0 overflow-hidden"><div class="p-5 pt-0 border-t border-gray-800/50 mt-1"><p class="text-orange-500 text-xs font-semibold mb-2 uppercase">Mekatronik Mühendisi</p><p class="text-sm text-gray-400 leading-relaxed">IETM projeleri, SolidWorks Composer ve Blender entegrasyonu ile özel player geliştirme süreçleri.</p></div></div>
                 </div>
-
                 <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
-                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
-                        <div class="flex items-center gap-4">
-                            <span class="text-orange-500 font-mono text-xs w-10">Eyl '12</span>
-                            <span class="font-bold text-gray-200 text-base">Teknik Lise</span>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    <div class="accordion-content max-h-0 overflow-hidden">
-                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
-                            <p class="text-gray-400 text-xs font-medium mb-2 uppercase">Makine Teknolojisi</p>
-                            <p class="text-sm text-gray-400 leading-relaxed">SERAL ve Erve Savunma bünyesinde staj eğitimleri.</p>
-                        </div>
-                    </div>
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none"><div class="flex items-center gap-4"><span class="text-orange-500 font-mono text-xs w-10">Eki '24</span><span class="font-bold text-gray-200 text-base uppercase">Sds Mekanik</span></div><svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <div class="accordion-content max-h-0 overflow-hidden"><div class="p-5 pt-0 border-t border-gray-800/50 mt-1"><p class="text-gray-400 text-xs font-medium mb-2 uppercase">Mekatronik Mühendisi</p><p class="text-sm text-gray-400 leading-relaxed">Silahlı atış simülasyon sistemleri ve donanım/yazılım entegrasyonu.</p></div></div>
                 </div>
-
+                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none"><div class="flex items-center gap-4"><span class="text-orange-500 font-mono text-xs w-10">MÜH</span><span class="font-bold text-gray-200 text-base uppercase">Marmara Üni. / Gazi Üni.</span></div><svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                    <div class="accordion-content max-h-0 overflow-hidden"><div class="p-5 pt-0 border-t border-gray-800/50 mt-1"><p class="text-gray-400 text-sm mb-2"><span class="text-white font-bold">Marmara Üni. (Mekatronik Müh. Lisans):</span> Python Yüz Tanıma, PWM, CNC, Eraltun Stajı.</p><p class="text-gray-400 text-sm"><span class="text-white font-bold">Gazi Üni. (Önlisans):</span> CAD, Otomasyon, Hidrokontrol Stajı.</p></div></div>
+                </div>
             </div>
         </section>
 
         <section id="tech-stack" class="max-w-5xl mx-auto mb-20 px-6">
-            <h2 class="text-3xl font-bold mb-8 text-white vibrant-border inline-block">Yetenekler</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">Unreal Engine 4/5</div>
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">Python</div>
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">Blender 3D</div>
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">SolidWorks</div>
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">AutoCAD</div>
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">Unity</div>
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">C# / C++</div>
-                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default">AI Prompting</div>
+            <h2 class="text-3xl font-bold mb-8 text-white vibrant-border inline-block uppercase tracking-wide">Yetenekler & Uzmanlık Matrix</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm font-medium">
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">Unreal Engine 4/5</div>
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">Python</div>
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">Blender 3D</div>
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">SolidWorks</div>
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">AutoCAD</div>
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">Unity</div>
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">C# / C++</div>
+                <div class="bg-gray-800/30 p-3 rounded-lg border border-gray-800 text-center text-gray-300 hover:border-orange-600 hover:text-white transition-colors duration-200 cursor-default uppercase">AI Prompting</div>
             </div>
         </section>
 
         <footer class="max-w-5xl mx-auto pb-12 px-6 border-t border-gray-800 pt-10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="text-gray-500 text-sm text-center md:text-left">
-                    <p>© 2026 Alperen Çolak.</p>
-                    <p class="text-xs mt-1">Bu portfolyo Claude & Gemini prompt mühendisliği ile inşa edilmiştir.</p>
+                    <p class="font-bold text-gray-400 uppercase tracking-widest">Alperen Çolak</p>
+                    <p>© 2026. Portfolyo mühendisliği Claude & Gemini prompt otomasyonu ile sağlanmıştır.</p>
                 </div>
                 <div class="flex gap-4">
-                    <a href="mailto:alperen_colak_06@outlook.com" class="px-5 py-2 bg-gray-800 hover:bg-orange-600 text-white text-sm rounded-lg transition-colors border border-gray-700">E-posta Gönder</a>
-                    <a href="https://www.linkedin.com/in/alperen-çolak-73175a1a1/" target="_blank" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors">LinkedIn Profile</a>
+                    <a href="mailto:alperen_colak_06@outlook.com" class="px-6 py-2.5 bg-gray-800 hover:bg-orange-600 text-white text-sm rounded-lg transition-colors border border-gray-700 uppercase font-semibold">İletişim Kur</a>
+                    <a href="https://www.linkedin.com/in/alperen-çolak-73175a1a1/" target="_blank" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors uppercase font-semibold">Analyze LinkedIn Profile</a>
                 </div>
             </div>
         </footer>
@@ -364,9 +256,97 @@
                 content.classList.remove('open');
                 icon.classList.remove('rotate-180');
             } else {
+                // Kapatmak diğer açık olanları (opsiyonel ama daha temiz UX)
+                document.querySelectorAll('.accordion-content').forEach(c => {
+                    if (c !== content) {
+                        c.style.maxHeight = null;
+                        c.classList.remove('open');
+                        c.parentElement.querySelector('.accordion-icon').classList.remove('rotate-180');
+                    }
+                });
+
                 content.style.maxHeight = content.scrollHeight + "px";
                 content.classList.add('open');
                 icon.classList.add('rotate-180');
+            }
+        }
+    </script>
+
+    <script>
+        // Win Condition Target Values (Angle targets in degrees)
+        const targetA = 45; 
+        const targetB = 15; 
+        const targetC = 75; 
+        const marginOfError = 4; // Tolerance in degrees
+
+        const blobA = document.getElementById('blobA');
+        const blobB = document.getElementById('blobB');
+        const blobC = document.getElementById('blobC');
+        const silhouette = document.getElementById('true-child-silhouette');
+        const statusText = document.getElementById('game-status-text');
+        
+        // Initial setup for shadow blobs positions
+        const gridWidth = document.getElementById('shadow-grid').offsetWidth;
+        blobA.style.left = (gridWidth * 0.2) + 'px';
+        blobB.style.left = (gridWidth * 0.45) + 'px';
+        blobC.style.left = (gridWidth * 0.7) + 'px';
+        blobA.style.top = (380 * 0.1) + 'px';
+        blobB.style.top = (380 * 0.05) + 'px';
+        blobC.style.top = (380 * 0.15) + 'px';
+        silhouette.style.left = (gridWidth * 0.45) + 'px';
+        silhouette.style.top = (380 * 0.05) + 'px';
+
+        function updateMatrix() {
+            const valA = parseInt(document.getElementById('sliderA').value);
+            const valB = parseInt(document.getElementById('sliderB').value);
+            const valC = parseInt(document.getElementById('sliderC').value);
+
+            // Update numerical values in UI
+            document.getElementById('valA').innerText = valA + '°';
+            document.getElementById('valB').innerText = valB + '°';
+            document.getElementById('valC').innerText = valC + '°';
+
+            // 1. Calculate Shadow Distortions (Skew & Translate) based on angles
+            // blobA: SkewX based on sliderA
+            blobA.style.transform = `skewX(${ (valA - 90) * 0.4 }deg) translateX(${(valA - 90) * 1.5}px)`;
+            
+            // blobB: SkewX based on sliderB (more intense)
+            blobB.style.transform = `skewX(${ (valB - 90) * 0.7 }deg) translateX(${(valB - 90) * 2}px)`;
+            
+            // blobC: SkewX based on sliderC
+            blobC.style.transform = `skewX(${ (valC - 90) * 0.3 }deg) translateX(${(valC - 90) * 1.1}px)`;
+
+            // 2. Calculate Shadow Convergence (Overlap proximity)
+            // Shadows should merge visually when sliders approach targets.
+            // When all 3 are near targets, they converge at blobB's initial position.
+            
+            // 3. Check Win Condition (Ticking Rooms Room 203 logic)
+            if (Math.abs(valA - targetA) <= marginOfError && 
+                Math.abs(valB - targetB) <= marginOfError && 
+                Math.abs(valC - targetC) <= marginOfError) {
+                
+                // --- WIN TRIGGERED ---
+                // Snap blobs to merge completely
+                blobA.style.transform = `skewX(0deg) translateX(${(targetA - valA)}px)`;
+                blobB.style.transform = `skewX(0deg) translateX(0px)`;
+                blobC.style.transform = `skewX(0deg) translateX(${(targetC - valC)}px)`;
+                blobA.style.filter = "blur(1px) opacity(0)";
+                blobB.style.filter = "blur(1px) opacity(0)";
+                blobC.style.filter = "blur(1px) opacity(0)";
+                
+                // Reveal true child silhouette
+                silhouette.classList.add('revealed');
+                statusText.classList.add('show');
+                
+                // Vibrate feedback (optional, safe for mobile desktop request)
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            } else {
+                // --- NOT WINNING (System unstable) ---
+                silhouette.classList.remove('revealed');
+                statusText.classList.remove('show');
+                blobA.style.filter = "blur(5px)";
+                blobB.style.filter = "blur(5px)";
+                blobC.style.filter = "blur(5px)";
             }
         }
     </script>
