@@ -16,23 +16,15 @@
         
         /* Proje Görselleri */
         .project-image { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #333; }
-        
-        /* Mobil İçin Zaman Çizelgesi (Timeline) Stilleri */
-        .timeline-container::after { content: ''; position: absolute; width: 2px; background-color: #333; top: 0; bottom: 0; left: 16px; margin-left: -1px; }
-        .timeline-item { position: relative; padding-left: 48px; }
-        .timeline-item::after { content: ''; position: absolute; width: 14px; height: 14px; left: 8px; background-color: #1e1e1e; border: 2px solid #333; top: 18px; border-radius: 50%; z-index: 10; transition: all 0.2s ease; }
-        
-        /* Mobil Timeline Hover Efektleri */
-        .timeline-item:hover::after { background-color: #f97316; border-color: #f97316; scale: 1.2; box-shadow: 0 0 10px 2px rgba(249, 115, 22, 0.4); }
-        .timeline-card { visibility: hidden; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
-        .timeline-item:hover .timeline-card { visibility: visible; opacity: 1; transform: translateY(0); }
-        .timeline-item:hover .timeline-date { color: #fff; }
-        .timeline-item:hover .timeline-title { color: #f97316; }
 
         /* Masaüstü Sidebar Özelleştirmeleri */
         .sidebar-scroll::-webkit-scrollbar { width: 4px; }
         .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        
+        /* Mobil Accordion (Akordeon) Animasyonu İçin */
+        .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 0; }
+        .accordion-content.open { opacity: 1; }
     </style>
 </head>
 <body class="antialiased lg:pl-16">
@@ -57,9 +49,8 @@
                 
                 <div class="absolute left-full top-1/2 -translate-y-1/2 ml-4 w-[380px] bg-[#1e1e1e] border border-gray-700 rounded-xl p-6 shadow-2xl opacity-0 invisible group-hover/item:opacity-100 group-hover/item:visible transform -translate-x-4 group-hover/item:translate-x-0 transition-all duration-300 z-[60]">
                     <div class="absolute top-1/2 -left-2 -translate-y-1/2 w-4 h-4 bg-[#1e1e1e] border-l border-t border-gray-700 -rotate-45"></div>
-                    
                     <h3 class="text-xl font-bold text-white mb-1">Toroslar Teknoloji</h3>
-                    <p class="text-orange-500 text-xs font-bold mb-4 uppercase tracking-wider">Mekatronik Mühendisi (Tam Zamanlı)</p>
+                    <p class="text-orange-500 text-xs font-bold mb-4 uppercase tracking-wider">Mekatronik Mühendisi</p>
                     <p class="text-sm text-gray-300 leading-relaxed">Etkileşimli Elektronik Teknik El Kitabı (IETM) projelerinde görev almaktayım. SolidWorks Composer kullanarak başlattığım görselleştirme süreçlerini, takım arkadaşlarımla birlikte geliştirdiğimiz özel bir oynatıcı (player) ile entegre ettim. Şu an bu süreçleri doğrudan Blender üzerinden yürütecek altyapı geçişini sağlamaktayım.</p>
                 </div>
             </div>
@@ -227,49 +218,111 @@
             </div>
         </section>
 
-        <section class="max-w-5xl mx-auto mb-16 px-6 relative timeline-container block lg:hidden">
-            <h2 class="text-3xl font-bold mb-10 text-white vibrant-border inline-block relative z-10">Kariyer & Eğitim</h2>
-            <p class="text-gray-500 text-sm italic mb-8 -mt-6">Masaüstü görünümünde interaktif yan menüyü deneyimleyebilirsiniz.</p>
+        <section class="max-w-5xl mx-auto mb-16 px-6 block lg:hidden">
+            <h2 class="text-3xl font-bold mb-6 text-white vibrant-border inline-block">Kariyer & Eğitim</h2>
+            <p class="text-gray-500 text-sm italic mb-6">Detayları görmek için başlıklara dokunun.</p>
             
-            <div class="space-y-10 relative z-10">
-                <div class="timeline-item group">
-                    <div class="absolute left-[-22px] top-[14px] text-xs font-mono text-gray-600 timeline-date transition-colors duration-200">Mar '25</div>
-                    <div class="card p-6 rounded-xl border border-gray-800 timeline-card">
-                        <h3 class="text-lg font-bold text-gray-200">Toroslar Teknoloji</h3>
-                        <p class="text-orange-500 text-xs font-semibold mb-3 uppercase">Mekatronik Mühendisi</p>
-                        <p class="text-sm text-gray-400">IETM projeleri, SolidWorks Composer ve Blender entegrasyonu ile özel player geliştirme süreçleri.</p>
+            <div class="space-y-4">
+                
+                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="text-orange-500 font-mono text-xs w-10">Mar '25</span>
+                            <span class="font-bold text-gray-200 text-base">Toroslar Teknoloji</span>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden">
+                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
+                            <p class="text-orange-500 text-xs font-semibold mb-2 uppercase">Mekatronik Mühendisi</p>
+                            <p class="text-sm text-gray-400 leading-relaxed">Etkileşimli Elektronik Teknik El Kitabı (IETM) projelerinde görev almaktayım. SolidWorks Composer kullanarak başlattığım görselleştirme süreçlerini, özel bir oynatıcı ile entegre ettim. Şu an Blender geçişini sağlamaktayım.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="absolute left-[-22px] top-[14px] text-xs font-mono text-gray-600 timeline-date">Eki '24</div>
-                    <div class="card p-6 rounded-xl border border-gray-800 timeline-card">
-                        <h3 class="text-lg font-bold text-gray-200">Sds Mekanik</h3>
-                        <p class="text-gray-500 text-xs mb-3">Mekatronik Mühendisi</p>
-                        <p class="text-sm text-gray-400">Silahlı atış simülasyon sistemleri ve donanım/yazılım entegrasyonu.</p>
+
+                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="text-orange-500 font-mono text-xs w-10">Eki '24</span>
+                            <span class="font-bold text-gray-200 text-base">Sds Mekanik</span>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden">
+                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
+                            <p class="text-gray-400 text-xs font-medium mb-2 uppercase">Mekatronik Mühendisi</p>
+                            <p class="text-sm text-gray-400 leading-relaxed">Silahlı atış simülasyon sistemleri projelerinde aktif rol aldım. Simülasyon silahı üretimi, donanım-yazılım entegrasyonu ve simülasyon mekaniklerinin geliştirilmesi süreçlerini yürüttüm.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="absolute left-[-22px] top-[14px] text-xs font-mono text-gray-600 timeline-date">Nis '23</div>
-                    <div class="card p-6 rounded-xl border border-gray-800 timeline-card">
-                        <h3 class="text-lg font-bold text-gray-200">Lorindol Games</h3>
-                        <p class="text-gray-500 text-xs mb-3">Oyun Geliştirici</p>
-                        <p class="text-sm text-gray-400">Market Owner Simulator projesinin tam zamanlı geliştirilmesi ve Steam yayını.</p>
+
+                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="text-orange-500 font-mono text-xs w-10">Nis '23</span>
+                            <span class="font-bold text-gray-200 text-base">Lorindol Games</span>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden">
+                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
+                            <p class="text-orange-500 text-xs font-semibold mb-2 uppercase">Oyun Geliştirici</p>
+                            <p class="text-sm text-gray-400 leading-relaxed">Market Owner Simulator projesinin tüm geliştirme (Unreal Engine), pazar araştırması ve Steam yayınlama süreçlerini baştan sona yönettim.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="absolute left-[-22px] top-[14px] text-xs font-mono text-gray-600 timeline-date">Eki '20</div>
-                    <div class="card p-6 rounded-xl border border-gray-800 timeline-card">
-                        <h3 class="text-lg font-bold text-gray-200">Marmara Üniversitesi</h3>
-                        <p class="text-gray-500 text-xs mb-3">Mekatronik Mühendisliği (GPA: 2.85)</p>
+
+                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="text-orange-500 font-mono text-xs w-10">Eki '20</span>
+                            <span class="font-bold text-gray-200 text-base">Marmara Üni.</span>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden">
+                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
+                            <div class="flex justify-between items-center mb-2">
+                                <p class="text-gray-400 text-xs font-medium uppercase">Mekatronik Mühendisi</p>
+                                <span class="text-orange-500 font-bold bg-orange-500/10 px-2 py-1 rounded text-xs">GPA: 2.85</span>
+                            </div>
+                            <p class="text-sm text-gray-400 leading-relaxed">Python Yüz Tanıma, PWM Kuluçka Makinesi, CNC Köpük Kesim projeleri ve Eraltun Mühendislik stajı (Ağu '24).</p>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="absolute left-[-22px] top-[14px] text-xs font-mono text-gray-600 timeline-date">Ağu '18</div>
-                    <div class="card p-6 rounded-xl border border-gray-800 timeline-card">
-                        <h3 class="text-lg font-bold text-gray-200">Gazi Üniversitesi</h3>
-                        <p class="text-gray-500 text-xs mb-3">Mekatronik Teknolojisi | Önlisans</p>
+
+                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="text-orange-500 font-mono text-xs w-10">Ağu '18</span>
+                            <span class="font-bold text-gray-200 text-base">Gazi Üni.</span>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden">
+                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
+                            <p class="text-gray-400 text-xs font-medium mb-2 uppercase">Mekatronik Teknolojisi</p>
+                            <p class="text-sm text-gray-400 leading-relaxed">Teknik çizim, CAD modelleme, temel otomasyon sistemleri ve Hidrokontrol A.Ş. Stajı.</p>
+                        </div>
                     </div>
                 </div>
+
+                <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
+                    <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <span class="text-orange-500 font-mono text-xs w-10">Eyl '12</span>
+                            <span class="font-bold text-gray-200 text-base">Teknik Lise</span>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content max-h-0 overflow-hidden">
+                        <div class="p-5 pt-0 border-t border-gray-800/50 mt-1">
+                            <p class="text-gray-400 text-xs font-medium mb-2 uppercase">Makine Teknolojisi</p>
+                            <p class="text-sm text-gray-400 leading-relaxed">SERAL ve Erve Savunma bünyesinde staj eğitimleri.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -301,5 +354,21 @@
         </footer>
     </main>
 
+    <script>
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('.accordion-icon');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                content.classList.remove('open');
+                icon.classList.remove('rotate-180');
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                content.classList.add('open');
+                icon.classList.add('rotate-180');
+            }
+        }
+    </script>
 </body>
 </html>
