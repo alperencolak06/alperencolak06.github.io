@@ -26,18 +26,29 @@
         .accordion-content { transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out; opacity: 0; }
         .accordion-content.open { opacity: 1; }
 
-        /* --- Shadow Matrix Game Stilleri --- */
-        #shadow-matrix-game.dark-mode-game { background-color: #0c0c0c; border: 1px solid #1a1a1a; box-shadow: inset 0 0 40px #000; }
+        /* --- Shadow Matrix Oda 203 Game Stilleri --- */
+        #shadow-matrix-game.dark-mode-game { background-color: #0c0c0c; border: 1px solid #1a1a1a; box-shadow: inset 0 0 40px #000; perspective: 1000px; }
         #shadow-grid { background-image: linear-gradient(#1e1e1e 1px, transparent 1px), linear-gradient(90deg, #1e1e1e 1px, transparent 1px); background-size: 20px 20px; border-radius: 12px; position: relative; width: 100%; height: 380px; }
         
-        /* Shadows (Pre-merged Blobs) */
-        .shadow-blob { position: absolute; width: 120px; height: 180px; transition: transform 0.2s ease, filter 0.2s ease; mix-blend-mode: multiply; filter: blur(5px); }
-        .shadow-blob-1 { background-color: rgba(20, 20, 20, 0.9); }
-        .shadow-blob-2 { background-color: rgba(25, 25, 25, 0.9); }
-        .shadow-blob-3 { background-color: rgba(15, 15, 15, 0.9); }
+        /* 3D Columns and Objects */
+        .column-structure { position: absolute; transform-style: preserve-3d; transition: transform 0.2s ease; }
+        .column-structure-1 { width: 40px; height: 160px; left: 15%; top: 10%; } /* Sol / Baş */
+        .column-structure-2 { width: 60px; height: 200px; left: 45%; top: 5%; } /* Orta / Vücut */
+        .column-structure-3 { width: 40px; height: 180px; left: 75%; top: 15%; } /* Sağ / Bacaklar */
+        
+        .red-object { position: absolute; background-color: rgba(185, 28, 28, 0.85); border: 2px solid #555; transition: transform 0.2s ease; }
+        .red-object-head { width: 30px; height: 30px; border-radius: 50%; top: -35px; left: 5px; } /* Yuvarlak Nesne */
+        .red-object-body { width: 50px; height: 80px; top: -85px; left: 5px; } /* Karmaşık Nesne (A) */
+        .red-object-legs { width: 30px; height: 60px; top: -65px; left: 5px; } /* Karmaşık Nesne (n) */
+        
+        /* 2D Shadow Pieces (Anatomical Parts) */
+        .shadow-piece { position: absolute; transition: top 0.3s ease, left 0.3s ease, opacity 0.3s ease, filter 0.3s ease; filter: blur(4px); mix-blend-mode: multiply; }
+        .shadow-piece-head { width: 60px; height: 60px; border-radius: 50%; background-color: rgba(15, 15, 15, 0.95); }
+        .shadow-piece-body { width: 100px; height: 160px; background-color: rgba(20, 20, 20, 0.95); /* A-shape will be done via clipping in JS */ }
+        .shadow-piece-legs { width: 60px; height: 120px; background-color: rgba(10, 10, 10, 0.95); /* n-shape will be done via clipping in JS */ }
         
         /* True Silhouette Mask (SVG path) */
-        #true-child-silhouette { position: absolute; width: 120px; height: 180px; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, filter 0.3s ease; fill: #111; filter: drop-shadow(0 0 10px #f97316) blur(2px); mix-blend-mode: multiply; }
+        #true-child-silhouette { position: absolute; width: 120px; height: 180px; visibility: hidden; opacity: 0; transition: opacity 0.4s ease, filter 0.3s ease; fill: #111; filter: drop-shadow(0 0 10px #f97316) blur(2px); mix-blend-mode: multiply; z-index: 50; }
         #true-child-silhouette.revealed { visibility: visible; opacity: 1; filter: drop-shadow(0 0 15px #f97316) blur(1px); fill: #111; }
 
         /* Final Message */
@@ -99,7 +110,7 @@
                             <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Endüstriyel Sistem Mühendisliği</p>
                             <p class="text-sm text-gray-400 mb-1 italic">Python, Blender API, SolidWorks Composer</p>
                             <p class="text-gray-300 text-sm mb-4 leading-relaxed">
-                                Savunma/Havacılık standartlarına (S1000D) uyumlu teknik dokümantasyon platformu tasarladım. Python betikleriyle Blender ve SolidWorks Composer süreçlerini otomatize edip, Etkileşimli Teknik El Kitabı (IETM) oynatıcı yazılımını mühendislikten üretime entegre ettim.
+                                Savunma/Havacılık standartlarına (S1000D) uyumlu teknik dokümantasyon platformu tasarladım. Python betikleriyle Blender ve SolidWorks Composer süreçlerini otomatize edip, Etkileşimli Teknik El Kitabı (IETM) oynatıcısını mühendislikten üretime entegre ettim.
                             </p>
                         </div>
                     </div>
@@ -113,14 +124,14 @@
                             <p class="text-xs text-gray-500 mb-4 uppercase tracking-wider">Unreal Engine 5 Core Development</p>
                             <p class="text-sm text-gray-400 mb-1 italic">C++ & Blueprints | Deep Systems fusion</p>
                             <p class="text-gray-300 text-sm mb-4 leading-relaxed">
-                                <strong>Geliştirme Aşamasında:</strong> Atmosferik gerilim ve derin psikolojik bulmaca döngülerinin teknik mimarisini kurguladım. Level tasarımı, gelişmiş aydınlatma sistemleri ve karmaşık mekaniklerin tamamı tarafımca Unreal Engine 5 üzerinde inşa edilmektedir.
+                                <strong>Geliştirme Aşamasında:</strong> Atmosferik gerilim ve derin psikolojik bulmaca döngülerinin teknik mimarisini kurguladım. Level tasarımı, gelişmiş aydınlatma sistemleri ve mekaniklerin tamamı tarafımca Unreal Engine 5 üzerinde inşa edilmektedir.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
-                    <img src="simulations.jpg" alt="Savunma AR Simulation Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Simulations+Visual'">
+                    <img src="savunma_ar.jpg" alt="Savunma AR Simulation Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Simulations+Visual'">
                     <div class="p-6 flex flex-col justify-between flex-grow">
                         <div>
                             <h3 class="text-xl font-bold text-orange-500 mb-2 uppercase tracking-wide">XR Defense & UGV Simulations</h3>
@@ -134,7 +145,7 @@
                 </div>
 
                 <div class="card rounded-2xl border border-gray-800 flex flex-col hover:border-orange-900">
-                    <img src="marketowner.jpg" alt="Market Owner Simulator Steam Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Market+Owner+Visual'">
+                    <img src="market_owner.jpg" alt="Market Owner Simulator Steam Screenshot" class="project-image" onerror="this.src='https://via.placeholder.com/600x338/1e1e1e/888888?text=Market+Owner+Visual'">
                     <div class="p-6 flex flex-col justify-between flex-grow">
                         <div>
                             <h3 class="text-xl font-bold text-orange-500 mb-2 uppercase tracking-wide">Steam Published Title: Main Developer</h3>
@@ -160,11 +171,15 @@
             
             <div id="shadow-matrix-game" class="dark-mode-game p-8 rounded-2xl border border-gray-800 flex flex-col lg:flex-row gap-8">
                 
-                <div class="flex-grow flex flex-col items-center">
+                <div class="flex-grow flex flex-col items-center relative overflow-hidden">
                     <div id="shadow-grid">
-                        <div class="shadow-blob shadow-blob-1" id="blobA"></div>
-                        <div class="shadow-blob shadow-blob-2" id="blobB"></div>
-                        <div class="shadow-blob shadow-blob-3" id="blobC"></div>
+                        <div class="column-structure column-structure-1" id="colA"><div class="red-object red-object-head"></div></div>
+                        <div class="column-structure column-structure-2" id="colB"><div class="red-object red-object-body"></div></div>
+                        <div class="column-structure column-structure-3" id="colC"><div class="red-object red-object-legs"></div></div>
+                        
+                        <div class="shadow-piece shadow-piece-head" id="blobA"></div>
+                        <div class="shadow-piece shadow-piece-body" id="blobB"></div>
+                        <div class="shadow-piece shadow-piece-legs" id="blobC"></div>
                         
                         <svg id="true-child-silhouette" viewBox="0 0 120 180" xmlns="http://www.w3.org/2000/svg">
                             <path d="M60,25c-5,0-9,4-9,9s4,9,9,9c5,0,9-4,9-9S65,25,60,25z M60,48c-8,0-15,6-15,14v35c0,1,1,2,2,2h6v56h14v-56h6c1,0,2-1,2-2V62C75,54,68,48,60,48z M51,62v32h-1c-1,0-2,1-2,2v22h4v-22h1V62H51z M69,62v32h1c1,0,2,1,2,2v22h-4v-22h-1V62H69z"/>
@@ -174,20 +189,20 @@
                 </div>
 
                 <div class="w-full lg:w-[320px] flex flex-col shrink-0">
-                    <h3 class="text-lg font-bold text-gray-200 mb-2">Işık Projeksiyon Analizi</h3>
-                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">Üç farklı spot ışığının açısını değiştirerek nesnelerin gölgelerini dikey ızgara üzerinde birleştirin. Doğru koordinatları bulup silueti oluşturduğunuzda sistem 'Stabil' hale gelecektir.</p>
+                    <h3 class="text-lg font-bold text-gray-200 mb-2">Shadow Chronology Analyzer</h3>
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">Üç dikey sütunun üzerindeki nesnelerin dönme açısını değiştirerek duvardaki gölgelerini dikey ızgara üzerinde birleştirin. Doğru koordinatları bulup silueti oluşturduğunuzda sistem 'Stabil' hale gelecektir.</p>
                     
                     <div class="space-y-6">
                         <div>
-                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderA" class="text-gray-300">Light 1 Angle</label><span class="text-orange-500" id="valA">0°</span></div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderA" class="text-gray-300">Sol Nesne (Yuvarlak) Açısı</label><span class="text-orange-500" id="valA">0°</span></div>
                             <input type="range" id="sliderA" min="0" max="180" value="0" step="1" class="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-600" oninput="updateMatrix()">
                         </div>
                         <div>
-                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderB" class="text-gray-300">Light 2 Angle</label><span class="text-orange-500" id="valB">0°</span></div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderB" class="text-gray-300">Orta Nesne (Vücut/A) Açısı</label><span class="text-orange-500" id="valB">0°</span></div>
                             <input type="range" id="sliderB" min="0" max="180" value="0" step="1" class="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-600" oninput="updateMatrix()">
                         </div>
                         <div>
-                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderC" class="text-gray-300">Light 3 Angle</label><span class="text-orange-500" id="valC">0°</span></div>
+                            <div class="flex justify-between text-xs font-mono mb-1.5"><label for="sliderC" class="text-gray-300">Sağ Nesne (Bacaklar/n) Açısı</label><span class="text-orange-500" id="valC">0°</span></div>
                             <input type="range" id="sliderC" min="0" max="180" value="0" step="1" class="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-orange-600" oninput="updateMatrix()">
                         </div>
                     </div>
@@ -201,11 +216,11 @@
         </section>
 
         <section class="max-w-5xl mx-auto mb-16 px-6 block lg:hidden">
-            <h2 class="text-3xl font-bold mb-6 text-white vibrant-border inline-block uppercase">Kariyer & Eğitim Matrix</h2>
+            <h2 class="text-3xl font-bold mb-6 text-white vibrant-border inline-block uppercase tracking-wide">Kariyer & Eğitim Matrix</h2>
             <div class="space-y-4">
                 <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
                     <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none"><div class="flex items-center gap-4"><span class="text-orange-500 font-mono text-xs w-10">Mar '25</span><span class="font-bold text-gray-200 text-base uppercase">Toroslar Teknoloji</span></div><svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-                    <div class="accordion-content max-h-0 overflow-hidden"><div class="p-5 pt-0 border-t border-gray-800/50 mt-1"><p class="text-orange-500 text-xs font-semibold mb-2 uppercase">Mekatronik Mühendisi</p><p class="text-sm text-gray-400 leading-relaxed">IETM projeleri, SolidWorks Composer ve Blender entegrasyonu ile özel player geliştirme süreçleri.</p></div></div>
+                    <div class="accordion-content max-h-0 overflow-hidden"><div class="p-5 pt-0 border-t border-gray-800/50 mt-1"><p class="text-orange-500 text-xs font-semibold mb-2 uppercase">Mekatronik Mühendisi</p><p class="text-sm text-gray-400 leading-relaxed">Etkileşimli Elektronik Teknik El Kitabı (IETM) projelerinde görev almaktayım. SolidWorks Composer kullanarak başlattığım görselleştirme süreçlerini, özel bir oynatıcı ile entegre ettim. Şu an Blender geçişini sağlamaktayım.</p></div></div>
                 </div>
                 <div class="bg-[#1e1e1e] border border-gray-800 rounded-xl overflow-hidden shadow-lg">
                     <button onclick="toggleAccordion(this)" class="w-full text-left p-5 flex justify-between items-center focus:outline-none"><div class="flex items-center gap-4"><span class="text-orange-500 font-mono text-xs w-10">Eki '24</span><span class="font-bold text-gray-200 text-base uppercase">Sds Mekanik</span></div><svg class="w-5 h-5 text-gray-500 transition-transform duration-300 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
@@ -273,28 +288,53 @@
     </script>
 
     <script>
-        // Win Condition Target Values (Angle targets in degrees)
-        const targetA = 45; 
-        const targetB = 15; 
-        const targetC = 75; 
-        const marginOfError = 4; // Tolerance in degrees
+        // Win Condition Target Angles (in degrees)
+        // Adjust these to change the puzzle difficulty
+        const targetA = 90; 
+        const targetB = 90; 
+        const targetC = 90; 
+        const marginOfError = 3; // Tolerance in degrees
 
+        const colA = document.getElementById('colA');
+        const colB = document.getElementById('colB');
+        const colC = document.getElementById('colC');
         const blobA = document.getElementById('blobA');
         const blobB = document.getElementById('blobB');
         const blobC = document.getElementById('blobC');
         const silhouette = document.getElementById('true-child-silhouette');
         const statusText = document.getElementById('game-status-text');
         
-        // Initial setup for shadow blobs positions
+        // Initial setup for shadow pieces and true silhouette
         const gridWidth = document.getElementById('shadow-grid').offsetWidth;
-        blobA.style.left = (gridWidth * 0.2) + 'px';
+        blobA.style.left = (gridWidth * 0.45) + 'px';
         blobB.style.left = (gridWidth * 0.45) + 'px';
-        blobC.style.left = (gridWidth * 0.7) + 'px';
-        blobA.style.top = (380 * 0.1) + 'px';
-        blobB.style.top = (380 * 0.05) + 'px';
-        blobC.style.top = (380 * 0.15) + 'px';
+        blobC.style.left = (gridWidth * 0.45) + 'px';
         silhouette.style.left = (gridWidth * 0.45) + 'px';
-        silhouette.style.top = (380 * 0.05) + 'px';
+        silhouette.style.top = (380 * 0.05) + 'px'; // Snap-to win position
+
+        // Function to create complex shadow shapes (A and n) via clip-path
+        function getBodyClipPath(angle) {
+            // A-shape body (simplified), stretches based on angle (rotateY simulation)
+            const stretch = Math.cos((angle - 90) * (Math.PI / 180)); // 0 when 90, 1 when 0/180
+            return `polygon(
+                ${50 - stretch * 40}% 0%, ${50 + stretch * 40}% 0%, /* Top width */
+                ${65 + stretch * 30}% 100%, ${65 + stretch * 30}% 100%, /* Right bottom */
+                ${35 - stretch * 30}% 100%, ${35 - stretch * 30}% 100%  /* Left bottom */
+            )`;
+        }
+
+        function getLegsClipPath(angle) {
+            // n-shape legs, stretches based on angle
+            const stretch = Math.cos((angle - 90) * (Math.PI / 180));
+            return `polygon(
+                ${20 - stretch * 15}% 0%, ${80 + stretch * 15}% 0%, /* Top width */
+                ${80 + stretch * 15}% 100%, ${65 + stretch * 15}% 100%, /* Right leg right edge */
+                ${65 + stretch * 15}% 20%, /* Gap right edge */
+                ${35 - stretch * 15}% 20%, /* Gap left edge */
+                ${35 - stretch * 15}% 100%, /* Left leg left edge */
+                ${20 - stretch * 15}% 100%  /* Left leg right edge */
+            )`;
+        }
 
         function updateMatrix() {
             const valA = parseInt(document.getElementById('sliderA').value);
@@ -306,30 +346,47 @@
             document.getElementById('valB').innerText = valB + '°';
             document.getElementById('valC').innerText = valC + '°';
 
-            // 1. Calculate Shadow Distortions (Skew & Translate) based on angles
-            // blobA: SkewX based on sliderA
-            blobA.style.transform = `skewX(${ (valA - 90) * 0.4 }deg) translateX(${(valA - 90) * 1.5}px)`;
-            
-            // blobB: SkewX based on sliderB (more intense)
-            blobB.style.transform = `skewX(${ (valB - 90) * 0.7 }deg) translateX(${(valB - 90) * 2}px)`;
-            
-            // blobC: SkewX based on sliderC
-            blobC.style.transform = `skewX(${ (valC - 90) * 0.3 }deg) translateX(${(valC - 90) * 1.1}px)`;
+            // 1. Rotate 3D Column structures (image_8.png visual)
+            colA.querySelector('.red-object').style.transform = `rotateY(${valA - 90}deg)`;
+            colB.querySelector('.red-object').style.transform = `rotateY(${valB - 90}deg)`;
+            colC.querySelector('.red-object').style.transform = `rotateY(${valC - 90}deg)`;
 
-            // 2. Calculate Shadow Convergence (Overlap proximity)
-            // Shadows should merge visually when sliders approach targets.
-            // When all 3 are near targets, they converge at blobB's initial position.
+            // 2. Distort/Calculate Shadow Shapes based on angles
+            // blobA (Head - Yuvarlak) gets oval/narrow based on angle
+            blobA.style.transform = `scaleX(${Math.abs(Math.cos((valA - 90) * (Math.PI / 180))) + 0.1})`;
             
-            // 3. Check Win Condition (Ticking Rooms Room 203 logic)
+            // blobB (Body - A) clip-path updates
+            blobB.style.clipPath = getBodyClipPath(valB);
+            
+            // blobC (Legs - n) clip-path updates
+            blobC.style.clipPath = getLegsClipPath(valC);
+
+            // 3. Position Shadows dikey (off-targets initially)
+            // They should move towards snapping points as targets are approached
+            const topMargin = 0.05 * 380; // snapping point top
+            const headSnap = topMargin + 25; // Snap positions relative to win silhouette
+            const bodySnap = topMargin + 48;
+            const legsSnap = topMargin + 104;
+
+            // Distribute vertically when off-target
+            blobA.style.top = (380 * 0.1 + (valA - 90) * 0.3) + 'px'; 
+            blobB.style.top = (380 * 0.05 + (valB - 90) * 0.1) + 'px'; 
+            blobC.style.top = (380 * 0.15 + (valC - 90) * 0.5) + 'px'; 
+
+            // 4. Check Win Condition (Ticking Rooms Oda 203 logic)
             if (Math.abs(valA - targetA) <= marginOfError && 
                 Math.abs(valB - targetB) <= marginOfError && 
                 Math.abs(valC - targetC) <= marginOfError) {
                 
                 // --- WIN TRIGGERED ---
-                // Snap blobs to merge completely
-                blobA.style.transform = `skewX(0deg) translateX(${(targetA - valA)}px)`;
-                blobB.style.transform = `skewX(0deg) translateX(0px)`;
-                blobC.style.transform = `skewX(0deg) translateX(${(targetC - valC)}px)`;
+                // Snap blobs to merge completely (anatomy-based dikey birleşme)
+                blobA.style.top = `${headSnap}px`;
+                blobB.style.top = `${bodySnap}px`;
+                blobC.style.top = `${legsSnap}px`;
+                blobA.style.left = `${silhouette.offsetLeft}px`;
+                blobB.style.left = `${silhouette.offsetLeft}px`;
+                blobC.style.left = `${silhouette.offsetLeft}px`;
+
                 blobA.style.filter = "blur(1px) opacity(0)";
                 blobB.style.filter = "blur(1px) opacity(0)";
                 blobC.style.filter = "blur(1px) opacity(0)";
@@ -344,9 +401,14 @@
                 // --- NOT WINNING (System unstable) ---
                 silhouette.classList.remove('revealed');
                 statusText.classList.remove('show');
-                blobA.style.filter = "blur(5px)";
-                blobB.style.filter = "blur(5px)";
-                blobC.style.filter = "blur(5px)";
+                blobA.style.filter = "blur(4px) opacity(1)";
+                blobB.style.filter = "blur(4px) opacity(1)";
+                blobC.style.filter = "blur(4px) opacity(1)";
+                
+                // Restore off-target horizontal positions
+                blobA.style.left = `${gridWidth * 0.45}px`;
+                blobB.style.left = `${gridWidth * 0.45}px`;
+                blobC.style.left = `${gridWidth * 0.45}px`;
             }
         }
     </script>
